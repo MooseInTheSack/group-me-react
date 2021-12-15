@@ -172,19 +172,85 @@ export function getTopMessagersByTotalMessages(numberToRetrieve, likesThreshold)
     }).slice(0,numberToRetrieve);
 }
 
-/*
+
 export function getTopMessagersBySentLikes() {
     const conv = getConversation();
     const dictOfIds = getDictionaryOfIdsToNames()
 
+    let userLikeDict = {}
+    /*
+    ex:
+    sender_name: {
+        liker_name_1: 3,
+        liker_name_2: 17,
+        etc.
+    }
+    so, liker_name_1 liked 3 of sender_name's messages
+    */
+
     for(let message of conv) {
         //console.log('message: ', message)
 
-        if(message.sender_id) {
+        if(message.sender_id && message.favorited_by && message.favorited_by.length > 0) {
+
+            const senderName = dictOfIds[message.sender_id]
+            
+
+            if(!userLikeDict[senderName])
+                userLikeDict[senderName] = {}
+            for(let likerID of message.favorited_by) {
+                const likerName = dictOfIds[likerID]
+                if(!userLikeDict[senderName][likerName]) {
+                    userLikeDict[senderName][likerName] = 1
+                } else {
+                    userLikeDict[senderName][likerName] += 1
+                }
+            }
+
+            
         }
     }
+    return userLikeDict
 
 }
-*/
+
+export function generateTotalSentLikesArray() {
+    const senderNameDict = getTopMessagersBySentLikes()
+    const dict = {}
+
+    for(let senderName of Object.keys(senderNameDict)) {
+        if(senderName !== undefined && senderName !== 'undefined') {
+            for(let likerName of Object.keys(senderNameDict[senderName])) {
+                if(likerName !== undefined && likerName !== 'undefined') {
+                    let senderDict = senderNameDict[senderName]
+                    let numberOfLikes = senderDict[likerName]
+                    if ( dict.hasOwnProperty(likerName)) {
+                        dict[likerName] += numberOfLikes
+                    } else {
+                        dict[likerName] = numberOfLikes
+                    }
+                }
+            }
+        }
+    }
+    
+    let arr = []
+    for(let person of Object.keys(dict)) {
+        arr.push({
+            name: person,
+            likesSent: dict[person]
+        })
+    }
+    return arr
+}
+
+export function getTopSentLikersArray() {
+    //sort by topMessage percent
+    const namesAndScoreArray = generateTotalSentLikesArray(0)
+    return namesAndScoreArray.sort(function (a, b) {
+        return b.likesSent - a.likesSent;
+    });
+}
+
 
 //getTopMessagersBySentLikes()

@@ -18,7 +18,9 @@ import {
         getTopMessagersByThreshold,
         getTopMessagersByPercent,
         getTopMessagersByTotalLikes,
-        getTopMessagersByTotalMessages 
+        getTopMessagersByTotalMessages,
+        getTopMessagersBySentLikes,
+        getTopSentLikersArray 
       } 
   from './components/loadGroupMeData'
 
@@ -97,6 +99,8 @@ function App() {
 
   // eslint-disable-next-line
   const [ topMessagers, setTopMessagers ] = useState([])
+  const [ topLikers, setTopLikers ] = useState([])
+  const [ numberOfEntries ] = useState(20)
   // eslint-disable-next-line
   const [labels, setLabels] = useState({})
   const [whichCategory, setWhichCategory] = useState(0)
@@ -107,15 +111,22 @@ function App() {
   })
 
   useEffect(() => {
+    //const yeet = getTopMessagersBySentLikes()
+    const yeet = getTopSentLikersArray()
+    console.log('yeet: ', yeet)
+    setTopLikers(yeet)
+  }, [])
+
+  useEffect(() => {
     let yeet = null
     if(whichCategory === 0) {
-      yeet = getTopMessagersByThreshold(25, threshold)
+      yeet = getTopMessagersByThreshold(numberOfEntries, threshold)
     } else if (whichCategory === 1) {
-      yeet = getTopMessagersByPercent(25, threshold)
+      yeet = getTopMessagersByPercent(numberOfEntries, threshold)
     } else if (whichCategory === 2) {
-      yeet = getTopMessagersByTotalLikes(25, 0)
+      yeet = getTopMessagersByTotalLikes(numberOfEntries, 0)
     } else if (whichCategory === 3) {
-      yeet = getTopMessagersByTotalMessages(25, 0)
+      yeet = getTopMessagersByTotalMessages(numberOfEntries, 0)
     } else if (whichCategory === 4) {
       yeet = [
         {
@@ -175,10 +186,11 @@ function App() {
 
   return (
     <div className="container">
+      <div className="heading">
 
       <h3>Mays MBA Class of 2022 GroupMe Data</h3>
 
-      <FormControl fullWidth>
+      <FormControl >
         <InputLabel id="demo-simple-select-category-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-category-label"
@@ -199,9 +211,8 @@ function App() {
       </FormControl>
       <br />
       <br />
-      <br />
       { whichCategory >= 2 ? null : ( 
-      <FormControl fullWidth>
+      <FormControl >
       
             <InputLabel id="demo-simple-select-threshold-label">Likes Threshold</InputLabel>
             <Select
@@ -220,7 +231,41 @@ function App() {
 
       </FormControl>
       )}
-      <Bar options={options} data={data} />
+      </div>
+      <div className="chart">
+        <Bar options={options} data={data} />
+      </div>
+      { topLikers.length <= 0 ? null : ( 
+      <div>
+        <h3>Top 10 Members Who Sent The Most Likes</h3>
+        <p>#1: {topLikers[0].name} : {topLikers[0].likesSent}</p>
+        <p>#2: {topLikers[1].name} : {topLikers[1].likesSent}</p>
+        <p>#3: {topLikers[2].name} : {topLikers[2].likesSent}</p>
+        <p>#4: {topLikers[3].name} : {topLikers[3].likesSent}</p>
+        <p>#5: {topLikers[4].name} : {topLikers[4].likesSent}</p>
+        <p>#6: {topLikers[5].name} : {topLikers[5].likesSent}</p>
+        <p>#7: {topLikers[6].name} : {topLikers[6].likesSent}</p>
+        <p>#8: {topLikers[7].name} : {topLikers[7].likesSent}</p>
+        <p>#9: {topLikers[8].name} : {topLikers[8].likesSent}</p>
+        <p>#10: {topLikers[9].name} : {topLikers[9].likesSent}</p>
+      </div>
+      )}
+      { topLikers.length <= 0 ? null : ( 
+      <div>
+        <h3>Top 10 Members Who Sent The LEAST Likes</h3>
+        <p>#1: {topLikers[topLikers.length-1-0].name} : {topLikers[topLikers.length-1-0].likesSent}</p>
+        <p>#2: {topLikers[topLikers.length-1-1].name} : {topLikers[topLikers.length-1-1].likesSent}</p>
+        <p>#3: {topLikers[topLikers.length-1-2].name} : {topLikers[topLikers.length-1-2].likesSent}</p>
+        <p>#4: {topLikers[topLikers.length-1-3].name} : {topLikers[topLikers.length-1-3].likesSent}</p>
+        <p>#5: {topLikers[topLikers.length-1-4].name} : {topLikers[topLikers.length-1-4].likesSent}</p>
+        <p>#6: {topLikers[topLikers.length-1-5].name} : {topLikers[topLikers.length-1-5].likesSent}</p>
+        <p>#7: {topLikers[topLikers.length-1-6].name} : {topLikers[topLikers.length-1-6].likesSent}</p>
+        <p>#8: {topLikers[topLikers.length-1-7].name} : {topLikers[topLikers.length-1-7].likesSent}</p>
+        <p>#9: {topLikers[topLikers.length-1-8].name} : {topLikers[topLikers.length-1-8].likesSent}</p>
+        <p>#10: {topLikers[topLikers.length-1-9].name} : {topLikers[topLikers.length-1-9].likesSent}</p>
+      </div>
+      )}
+
     </div>
   )
 }
