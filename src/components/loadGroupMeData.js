@@ -148,7 +148,7 @@ export function getTopMessagersByThreshold(numberToRetrieve, likesThreshold) {
     }).slice(0,numberToRetrieve);
 }
 
- function getTopMessagersByPercent(numberToRetrieve, likesThreshold) {
+export function getTopMessagersByPercent(numberToRetrieve, likesThreshold) {
     //sort by topMessage percent
     const namesAndScoreArray = generateNamesAndScoreArray(likesThreshold)
     return namesAndScoreArray.sort(function (a, b) {
