@@ -140,7 +140,7 @@ const generateNamesAndScoreArray = (likesThreshold) => {
     return namesAndScoreArray
 }
 
- function getTopMessagersByThreshold(numberToRetrieve, likesThreshold) {
+export function getTopMessagersByThreshold(numberToRetrieve, likesThreshold) {
     //sort by topMessage count
     const namesAndScoreArray = generateNamesAndScoreArray(likesThreshold)
     return namesAndScoreArray.sort(function (a, b) {
@@ -156,7 +156,7 @@ const generateNamesAndScoreArray = (likesThreshold) => {
     }).slice(0,numberToRetrieve);
 }
 
- function getTopMessagersByTotalLikes(numberToRetrieve, likesThreshold) {
+export function getTopMessagersByTotalLikes(numberToRetrieve, likesThreshold) {
     //sort by topMessage percent
     const namesAndScoreArray = generateNamesAndScoreArray(0)
     return namesAndScoreArray.sort(function (a, b) {
@@ -164,7 +164,7 @@ const generateNamesAndScoreArray = (likesThreshold) => {
     }).slice(0,numberToRetrieve);
 }
 
- function getTopMessagersByTotalMessages(numberToRetrieve, likesThreshold) {
+export function getTopMessagersByTotalMessages(numberToRetrieve, likesThreshold) {
     //sort by topMessage percent
     const namesAndScoreArray = generateNamesAndScoreArray(0)
     return namesAndScoreArray.sort(function (a, b) {
@@ -172,10 +172,19 @@ const generateNamesAndScoreArray = (likesThreshold) => {
     }).slice(0,numberToRetrieve);
 }
 
- function getTopMessagersBySentLikes() {
+/*
+export function getTopMessagersBySentLikes() {
     const conv = getConversation();
     const dictOfIds = getDictionaryOfIdsToNames()
 
-    console.log('conv: ', conv)
+    for(let message of conv) {
+        //console.log('message: ', message)
+
+        if(message.sender_id) {
+        }
+    }
 
 }
+*/
+
+//getTopMessagersBySentLikes()
