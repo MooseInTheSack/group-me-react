@@ -140,7 +140,7 @@ const generateNamesAndScoreArray = (likesThreshold) => {
     return namesAndScoreArray
 }
 
-export function getTopMessagersByThreshold(numberToRetrieve, likesThreshold) {
+ function getTopMessagersByThreshold(numberToRetrieve, likesThreshold) {
     //sort by topMessage count
     const namesAndScoreArray = generateNamesAndScoreArray(likesThreshold)
     return namesAndScoreArray.sort(function (a, b) {
@@ -148,7 +148,7 @@ export function getTopMessagersByThreshold(numberToRetrieve, likesThreshold) {
     }).slice(0,numberToRetrieve);
 }
 
-export function getTopMessagersByPercent(numberToRetrieve, likesThreshold) {
+ function getTopMessagersByPercent(numberToRetrieve, likesThreshold) {
     //sort by topMessage percent
     const namesAndScoreArray = generateNamesAndScoreArray(likesThreshold)
     return namesAndScoreArray.sort(function (a, b) {
@@ -156,7 +156,7 @@ export function getTopMessagersByPercent(numberToRetrieve, likesThreshold) {
     }).slice(0,numberToRetrieve);
 }
 
-export function getTopMessagersByTotalLikes(numberToRetrieve, likesThreshold) {
+ function getTopMessagersByTotalLikes(numberToRetrieve, likesThreshold) {
     //sort by topMessage percent
     const namesAndScoreArray = generateNamesAndScoreArray(0)
     return namesAndScoreArray.sort(function (a, b) {
@@ -164,7 +164,7 @@ export function getTopMessagersByTotalLikes(numberToRetrieve, likesThreshold) {
     }).slice(0,numberToRetrieve);
 }
 
-export function getTopMessagersByTotalMessages(numberToRetrieve, likesThreshold) {
+ function getTopMessagersByTotalMessages(numberToRetrieve, likesThreshold) {
     //sort by topMessage percent
     const namesAndScoreArray = generateNamesAndScoreArray(0)
     return namesAndScoreArray.sort(function (a, b) {
@@ -172,8 +172,10 @@ export function getTopMessagersByTotalMessages(numberToRetrieve, likesThreshold)
     }).slice(0,numberToRetrieve);
 }
 
-//const arr = generateNamesAndScoreArray(3, 15)
-//const topSendersByThreshold = getTopMessagersByThreshold(arr)
+ function getTopMessagersBySentLikes() {
+    const conv = getConversation();
+    const dictOfIds = getDictionaryOfIdsToNames()
 
-//const topSendersByPercent = getTopMessagersByPercent(arr)
-//console.log('topSendersByPercent: ', topSendersByPercent)
+    console.log('conv: ', conv)
+
+}
