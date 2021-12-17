@@ -125,7 +125,8 @@ const generateNamesAndScoreArray = (likesThreshold) => {
             topMessages: mostLikedMessages[name].length,
             topMessageThreshold: likesThreshold,
             totalMessages: totalMessagesCount[name],
-            percentOfMessagesThatMetThreshold: mostLikedMessages[name].length/totalMessagesCount[name]
+            percentOfMessagesThatMetThreshold: mostLikedMessages[name].length/totalMessagesCount[name],
+            likesPerMessage: totalLikesCount[name]/totalMessagesCount[name]
         }
         namesAndScoreArray.push({
             name: name,
@@ -133,7 +134,8 @@ const generateNamesAndScoreArray = (likesThreshold) => {
             topMessageThreshold: likesThreshold,
             totalMessages: totalMessagesCount[name],
             totalLikes: totalLikesCount[name],
-            percentOfMessagesThatMetThreshold: mostLikedMessages[name].length/totalMessagesCount[name]
+            percentOfMessagesThatMetThreshold: mostLikedMessages[name].length/totalMessagesCount[name],
+            likesPerMessage: totalLikesCount[name]/totalMessagesCount[name]
         })
     }    
 
@@ -267,7 +269,15 @@ export function getTopLikersByPersonArray(personName) {
     
 }
 
-export function getTopLikedMessagesArray(numberToReturn) {
+export function getTotalLikesPerMessageArray(numberToRetrieve) {
+    const namesAndScoreArray = generateNamesAndScoreArray(0)
+    return namesAndScoreArray.sort(function (a, b) {
+        return b.likesPerMessage - a.likesPerMessage;
+    }).slice(0,numberToRetrieve);
+
+}
+
+export function getTopLikedMessagesArray(numberToRetrieve) {
     const conv = getConversation()
     let arrToReturn = []
     /*
@@ -282,6 +292,6 @@ export function getTopLikedMessagesArray(numberToReturn) {
         }
         
     }
-    
+
     return arrToReturn
 }

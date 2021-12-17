@@ -16,10 +16,10 @@ import { Bar } from 'react-chartjs-2';
 import './App.css'
 import {  
         getTopMessagersByThreshold,
-        getTopMessagersByPercent,
         getTopMessagersByTotalLikes,
         getTopMessagersByTotalMessages,
         getTopSentLikersArray,
+        getTotalLikesPerMessageArray,
       } 
   from './components/loadGroupMeData'
 
@@ -33,7 +33,7 @@ ChartJS.register(
 );
 
 export const options = {
-  responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     title: {
       display: true,
@@ -58,7 +58,7 @@ function App() {
       if(whichCategory === 0) {
         whichCategoryString = "topMessages"
       } else if (whichCategory === 1) {
-        whichCategoryString = "percentOfMessagesThatMetThreshold"
+        whichCategoryString = "likesPerMessage"
       } else if (whichCategory === 2) {
         whichCategoryString = "totalLikes"
       } else if(whichCategory === 3) {
@@ -99,7 +99,7 @@ function App() {
   // eslint-disable-next-line
   const [ topMessagers, setTopMessagers ] = useState([])
   const [ topLikers, setTopLikers ] = useState([])
-  const [ numberOfEntries ] = useState(20)
+  const [ numberOfEntries ] = useState(10)
   // eslint-disable-next-line
   const [labels, setLabels] = useState({})
   const [whichCategory, setWhichCategory] = useState(0)
@@ -111,7 +111,11 @@ function App() {
 
   useEffect(() => {
     const yeet = getTopSentLikersArray()
+    const ducky = getTotalLikesPerMessageArray(numberOfEntries)
+    console.log('ducky: ', ducky)
+
     setTopLikers(yeet)
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -119,7 +123,7 @@ function App() {
     if(whichCategory === 0) {
       yeet = getTopMessagersByThreshold(numberOfEntries, threshold)
     } else if (whichCategory === 1) {
-      yeet = getTopMessagersByPercent(numberOfEntries, threshold)
+      yeet = getTotalLikesPerMessageArray(numberOfEntries, threshold)
     } else if (whichCategory === 2) {
       yeet = getTopMessagersByTotalLikes(numberOfEntries, 0)
     } else if (whichCategory === 3) {
@@ -138,36 +142,36 @@ function App() {
     } else if (whichCategory === 5) {
       yeet = [
         {
-          name: "Tyler Kirkpatrick",
-          data: 3,
+          name: "Mike Spencer",
+          data: 6
         },
         {
-          name: "Mike Spencer",
-          data: 3
+          name: "Tyler Kirkpatrick",
+          data: 5,
         },
         {
           name: "Daniel Liñan",
-          data: 2
+          data: 4
         },
         {
           name: "Ryan Pool",
-          data: 2
+          data: 4
         },
         {
           name: "Tanner Mauro",
-          data: 2
+          data: 4
         },
         {
           name: "John Lazar",
-          data: 2
+          data: 3
         },
         {
           name: "Brandon Campbell",
-          data: 2
+          data: 3
         },
         {
           name: "Brandon Carlton",
-          data: 1
+          data: 3
         },
         {
           name: "Haywood Miller",
@@ -198,7 +202,7 @@ function App() {
           
         >
           <MenuItem value={0}>Most Messages Meeting Liked Threshold</MenuItem>
-          <MenuItem value={1}>Highest Percent of Messages Meeting Liked Threshold</MenuItem>
+          <MenuItem value={1}>Averge Likes Per Message</MenuItem>
           <MenuItem value={2}>Total Likes From Messages</MenuItem>
           <MenuItem value={3}>Most Sent Messages</MenuItem>
           <MenuItem value={4}>Most Canadian Messages</MenuItem>
@@ -230,7 +234,10 @@ function App() {
       )}
       </div>
       <div className="chart">
-        <Bar options={options} data={data} />
+        <Bar 
+          options={options} 
+          data={data} 
+        />
       </div>
       { topLikers.length <= 0 ? null : ( 
       <div>
