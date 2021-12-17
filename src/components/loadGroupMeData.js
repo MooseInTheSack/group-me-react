@@ -252,5 +252,36 @@ export function getTopSentLikersArray() {
     });
 }
 
+export function getTopLikersByPersonArray(personName) {
+    const dict = getTopMessagersBySentLikes()
+    if(dict.hasOwnProperty(personName)) {
+        const likersDict = dict[personName]
+        let arr = []
+        for(let key of Object.keys(likersDict)) {
+            arr.push({'name': key, 'likes': likersDict[key]})
+        }
+        return arr
+    } else {
+        return []
+    }
+    
+}
 
-//getTopMessagersBySentLikes()
+export function getTopLikedMessagesArray(numberToReturn) {
+    const conv = getConversation()
+    let arrToReturn = []
+    /*
+    { name: x, likes: x, message: x}
+    */
+    for(let message of conv) {
+        
+        if(message.favorited_by && message.favorited_by.length > 0) {
+
+            //TODO: figure this thang out
+
+        }
+        
+    }
+    
+    return arrToReturn
+}

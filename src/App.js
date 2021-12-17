@@ -19,8 +19,7 @@ import {
         getTopMessagersByPercent,
         getTopMessagersByTotalLikes,
         getTopMessagersByTotalMessages,
-        getTopMessagersBySentLikes,
-        getTopSentLikersArray 
+        getTopSentLikersArray,
       } 
   from './components/loadGroupMeData'
 
@@ -111,9 +110,7 @@ function App() {
   })
 
   useEffect(() => {
-    //const yeet = getTopMessagersBySentLikes()
     const yeet = getTopSentLikersArray()
-    console.log('yeet: ', yeet)
     setTopLikers(yeet)
   }, [])
 
@@ -237,7 +234,7 @@ function App() {
       </div>
       { topLikers.length <= 0 ? null : ( 
       <div>
-        <h3>Top 10 Members Who Sent The Most Likes</h3>
+        <h3>Top 10 Members Who Liked the Most Number of Messages</h3>
         <p>#1: {topLikers[0].name} : {topLikers[0].likesSent}</p>
         <p>#2: {topLikers[1].name} : {topLikers[1].likesSent}</p>
         <p>#3: {topLikers[2].name} : {topLikers[2].likesSent}</p>
@@ -252,7 +249,7 @@ function App() {
       )}
       { topLikers.length <= 0 ? null : ( 
       <div>
-        <h3>Top 10 Members Who Sent The LEAST Likes</h3>
+        <h3>Top 10 Members Who Liked the Least Number of Messages</h3>
         <p>#1: {topLikers[topLikers.length-1-0].name} : {topLikers[topLikers.length-1-0].likesSent}</p>
         <p>#2: {topLikers[topLikers.length-1-1].name} : {topLikers[topLikers.length-1-1].likesSent}</p>
         <p>#3: {topLikers[topLikers.length-1-2].name} : {topLikers[topLikers.length-1-2].likesSent}</p>
